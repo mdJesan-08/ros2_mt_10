@@ -27,29 +27,39 @@ class Subscriber(Node):
 
         # Here main moto is not to move the rover when both command is coming
 
-        if(vel.linear.x!=1500):
-            if(vel.angular.z!=1500):
-                print("Both of Linear and angualr is coming ,Rover will not move")
-            else:
-                print("Linaer set_value"+str(int(vel.linear.x)))
+        if(vel.linear.x==1500):
+            if(vel.angular.z==1500):
+                print(" Rover is Stop,None of them is talking")
                 self.set_servo_pwm(RC_1,vel.linear.x)
-                self.set_servo_pwm(RC_2,vel.linear.x)
+                self.set_servo_pwm(RC_2,vel.angular.z)
+            else:
+                # Linear is not talking But ANgular is talking
+                print("Angular movement")
+                if(vel.angular.z>1500):
+                    print("Right Movement,Left Motor Move fast")
+                    self.set_servo_pwm(RC_2,vel.angular.z)
+                    self.set_servo_pwm(RC_1,1500-(vel.angular.z-1500))
+                else:
+                    print("Left Movement,Right Motor Move fast")
+                    self.set_servo_pwm(RC_1,1500+(1500-vel.angular.z))
+                    self.set_servo_pwm(RC_2,vel.angular.z)
+
+
+
+
         else:
             if(vel.angular.z==1500):
-                print("Both of the are same same,1500 Rover is stop")
+                # Angular is not talking Rover Should move Linearly
+                print(" Rover is Moving Linearly")
+                self.set_servo_pwm(RC_1,vel.linear.x)
+                self.set_servo_pwm(RC_2,vel.linear.x)
             else:
-                print("Angular set_value"+str(int(vel.angular.z)))
-                if(vel.angular.z>1500):
-                    #    want to go right ,left motor will move faster in forward
-                    print("right rotation")
-                    self.set_servo_pwm(RC_1,1500-(vel.angular.z-1500))
-                    self.set_servo_pwm(RC_2,vel.angular.z)
-                    print("Left speed :"+str(int(vel.angular.z))+" ,"+ "Right speed:" +str(int(1500-(vel.angular.z-1500))))
-                else:
-                    #    want to go Left ,right motor will move faster in forward
-                    self.set_servo_pwm(RC_1,(1500-vel.angular.z)+1500)
-                    self.set_servo_pwm(RC_2,vel.angular.z)
-                    print("Left speed :"+str(int(vel.angular.z))+" ,"+ "Right speed:" +str((1500-vel.angular.z)+1500))
+                # Linaer is talking and angular is also talking 
+                print(" Rover is Stop")
+                self.set_servo_pwm(RC_1,1500)
+                self.set_servo_pwm(RC_2,1500)
+
+
 
     def set_servo_pwm(self,servo_n, microseconds):
         master.mav.command_long_send(
