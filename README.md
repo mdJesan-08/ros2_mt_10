@@ -9,7 +9,7 @@ This repository documents the development of a differential drive rover control 
 ### `mt_main_10.0_ros2_diff_drive_v1`
 > **Stage 1: Arduino + BTS7960 + ROS2 (PySerial)**
 
-- Implemented differential drive control using **Arduino UNO**.
+- Implemented differential drive control using **Arduino MEGA**.
 - **BTS7960** H-bridge motor driver used for brushed motor control.
 - Communication between **Arduino** and **ROS2 (Humble)** via **PySerial**.
 - ROS2 nodes handled velocity commands and encoder feedback.
@@ -105,7 +105,7 @@ Switching to **Pixhawk + pymavlink** allowed us to take advantage of the MAVLink
 
 **Md Jesan**  
 GitHub: [@mdJesan-08](https://github.com/mdJesan-08)  
-Main control system developer and rover driver  
+Team Lead
 BRAC University | BRACU Mongol Tori
 
 ---
